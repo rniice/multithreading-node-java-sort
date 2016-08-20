@@ -13,9 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.pedrovgs.problem79;
+package com.sortingmodules.mergesort;
 
-import com.github.pedrovgs.sortingalgorithm.SortingAlgorithm;
+import com.sortingmodules.sortingalgorithm.SortingAlgorithm;
 
 /**
  * Given an array full of integers implement a merge sort algorithm to sort the content inside

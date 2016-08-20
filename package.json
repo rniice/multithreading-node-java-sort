@@ -1,0 +1,22 @@
+{
+  "name": "multithreading-node-java-sort",
+  "version": "0.0.1",
+  "description": "multithreading in node using java libraries",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rniice/multithreading-node-java-sort.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rniice/multithreading-node-java-sort/issues"
+  },
+  "homepage": "https://github.com/rniice/multithreading-node-java-sort#readme",
+  "dependencies": {
+    "java": "^0.7.2"
+  }
+}
