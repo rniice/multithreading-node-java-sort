@@ -40,6 +40,7 @@ public class MergeSort extends SortingAlgorithm {
    * access. However, it has additional O(n) space complexity, and involves a large number of
    * copies in simple implementations.
    */
+
   @Override public void sort(int[] numbers) {
     validateInput(numbers);
 
