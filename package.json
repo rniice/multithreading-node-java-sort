@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/rniice/multithreading-node-java-sort#readme",
   "dependencies": {
-    "java": "^0.7.2"
+    "java": "^0.7.2",
+    "nanotimer": "^0.3.14"
   }
 }
