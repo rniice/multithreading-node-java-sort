@@ -1,14 +1,17 @@
 # multithreading-node-java-sort
-test using multiple threads in node to perform merge sort
 
+## Compare Merge Sorting Javascript vs Java Single vs Multiple Threads
 
-ensure jdk is installed and on path (use 1.7 jre and jdk for now 64 bit)
+- [x] test single thread javascript for various lengths n array
+- [x] test multiple thread javascript for various lengths n array
+- [ ] test single thread java for various lengths n array
+- [ ] test multiple thread java for various lengths n array
 
-build scripts:
+## Dependencies
 
-mkdir build
-javac -d ./build *.java
-cd build
-jar cvf YourJar.jar *
+- ensure jdk is installed and on path (use 1.7 jre and jdk for now 64 bit)
+- build scripts: use makebuild.sh in src/java to generate bin .jar files
 
-cpy package into bin
+## Results
+
+- TBD
