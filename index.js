@@ -18,7 +18,7 @@ var min_array_length  = 10;
 var max_array_length  = 100000;
 
 //var elapsed_ms_single_js    = testJavaScriptSingleThread(100000);
-var elapsed_ms_4x_js          = testJavaScriptMultipleThread(100000);
+var elapsed_ms_4x_js          = testJavaScriptMultipleThread(1000000);
 
 
 
