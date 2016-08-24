@@ -19,19 +19,10 @@ var min_array_length  = 10;
 var max_array_length  = 100000;
 
 //var elapsed_ms_single_js    = testJavaScriptSingleThread(100000);
-var elapsed_ms_4x_js      = testJavaScriptMultipleThread(100);
+var elapsed_ms_4x_js      = testJavaScriptMultipleThread(100000);
 
 
-//loop through and test single thread javascript for various lengths n array
 
-
-//loop through and test multiple thread javascript for various lengths n array
-
-
-//loop through and test single thread java for various lengths n array
-
-
-//loop through and test multiple thread java for various lengths n array
 
 
 
@@ -56,43 +47,30 @@ function testJavaScriptMultipleThread(length){
   var length_ea = Math.floor(length/4);
 
   var array_data = [
-    test_array
-    //test_array.slice(0, length_ea)
-    //,test_array.slice(length_ea, 2*length_ea)
-    //,test_array.slice(2*length_ea, 3*length_ea)
-    //,test_array.slice(3*length_ea)
+    test_array.slice(0, length_ea)
+    ,test_array.slice(length_ea, 2*length_ea)
+    ,test_array.slice(2*length_ea, 3*length_ea)
+    ,test_array.slice(3*length_ea)
   ];
 
-  var fork_instance = [null, null, null, null];
-  var fork_result = [null, null, null, null];
+  var fork_instance = [];
+  var fork_result = [];
 
   for (var i=0; i<array_data.length; i++){
-    fork_instance[i] = fork(cwd + '/src/node/ForkJavaScript.js',[],{silent: false});
+    fork_instance.push(fork(cwd + '/src/node/ForkJavaScript.js',[],{silent: false}));
 
     //load the listener for the fork
     fork_instance[i].on('message', function(data){
-      console.log("parent received message: " + data);
       if(data.result){
-          fork_result[i] = data;
-          console.log(data.result);
-          console.log(data.elapsed_ms);
+          fork_result.push(data);
+          //console.log("fork results sorted: " + data.result);
+          console.log("fork sort elapsed_ms: " + data.elapsed_ms);
       }
     });
-    console.log(array_data[i]);
 
     fork_instance[i].send({load: true, path: '/src/node/MergeSort.js', args: array_data[i]});
     fork_instance[i].send({run: true});
 
-    /*
-    //load data and then run the fork
-    setTimeout(function(){
-      fork_instance[i].send({load: true, path: '/src/node/MergeSort.js', args:[5,2,1,5,6,2,4,5]});
-
-      setTimeout(function(){
-        fork_instance[i].send({run: true});
-      },1000);
-    },2000);
-    */
   }
   //fork1_result.send("testing sending data");
 
@@ -124,20 +102,7 @@ function testJavaMultipleThread(length){
 }
 
 
-/*
-var random_array = randomArrayGenerator(1000, -100, 100);
-console.log(random_array);
-
-console.log(mergeSortArray(random_array));
-*/
-
-/*
-var test_array  = [1,4,2,6,3,7,9.2,1];
-var array1      = [1,2,6,102,103,108];
-var array2      = [2,5,101];
-
-var result1 = mergeSortArray(test_array);
-var result2 = MergeSortedArrays(array2, array1);
-console.log(result1);
-console.log(result2);
-*/
+//test single thread javascript for various lengths n array
+//test multiple thread javascript for various lengths n array
+//test single thread java for various lengths n array
+//test multiple thread java for various lengths n array
