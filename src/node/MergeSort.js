@@ -12,21 +12,27 @@ function mergeSort(arr) {
 }
 
 function merge(left, right) {
-    var result = [];
+
+    //pre-allocate memory for the array length for performance
+    var result_length = left.length + right.length;
+    var result = new Array(result_length);
+    var index = 0;
 
     while (left.length && right.length) {
         if (left[0] <= right[0]) {
-            result.push(left.shift());
+            result[index++] = left.shift();
         } else {
-            result.push(right.shift());
+            result[index++] = right.shift();
         }
     }
 
-    while (left.length)
-        result.push(left.shift());
+    while (left.length){
+      result[index++] = left.shift();
+    }
 
-    while (right.length)
-        result.push(right.shift());
+    while (right.length){
+      result[index++] = right.shift();
+    }
 
     return result;
 }
