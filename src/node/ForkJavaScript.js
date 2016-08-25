@@ -3,6 +3,7 @@ var _function   = null;
 var _args       = null;
 
 process.send("new fork started");
+
 //receive data through message api for child process fork
 process.on('message', function(data){
   if(data.load){

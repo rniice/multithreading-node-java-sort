@@ -18,6 +18,8 @@
   "homepage": "https://github.com/rniice/multithreading-node-java-sort#readme",
   "dependencies": {
     "java": "^0.7.2",
-    "nanotimer": "^0.3.14"
+    "nanotimer": "^0.3.14",
+    "q": "^1.4.1",
+    "q-foreach": "0.0.3"
   }
 }
