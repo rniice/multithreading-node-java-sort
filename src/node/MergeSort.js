@@ -7,11 +7,9 @@ class MergeSort {
         this.length    = array.length;
         this.array     = array;
         this.sorted    = new Array(this.length);  //pre-allocate the memory
-    }
 
-    sort () {
-        this.sorted = this.mergeSort(this.array);
-        return this.sorted;
+        //instead of returning MergeSort object, return the sorted result array
+        return this.mergeSort(this.array);
     }
 
     mergeSort(arr) {

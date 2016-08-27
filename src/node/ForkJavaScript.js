@@ -2,7 +2,6 @@
 var _class      = null;
 var _args       = null;
 var _method     = null;
-//var _args       = new Array(1000000);  //pre-allocate memory for args
 
 process.send("new fork started");
 
@@ -27,8 +26,8 @@ function loadData(data){
 function forkJavaScript() {
   process.send("running function and args");
   var time_start      = new Date().getTime();
-  var class_instance  = new _class(_args);          //create the new class
-  var result          = class_instance[_method]();  //call the specified method
+  var result          = new _class(_args);            //create the new class
+  //var result          = class_instance[_method]();  //call the specified method
   var time_finish     = new Date().getTime();
   var elapsed_ms      = time_finish - time_start;
   sendResult(result, elapsed_ms);

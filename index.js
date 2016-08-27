@@ -21,8 +21,8 @@ java.classpath.push("bin/MergeSortBinaries.jar");                         //load
 //var array_lengths = createTestArrayLengths(10000, 1000000, 20000);
 //console.log(array_lengths);
 
-testJavaScriptMultipleThread(100000, -1000, 1000);  //array length, min val, max val
-//testJavaScriptSingleThread(100000, -1000, 1000);      //array length, min val, max val
+testJavaScriptMultipleThread(700000, -1000, 1000);  //array length, min val, max val
+//testJavaScriptSingleThread(500000, -1000, 1000);      //array length, min val, max val
 
 //test 4x multithreaded javascript sort
 
