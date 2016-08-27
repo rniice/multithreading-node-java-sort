@@ -9,40 +9,25 @@ const fs                    = require('fs');                              //load
 java.classpath.push("bin/MergeSortBinaries.jar");                         //load the java merge sort libraries
 
 
-const array_lenghts_gen   = new ArrayGenerator(10, 20000, 1000000);
-const array_lengths       = array_lenghts_gen.generateSequential();
+const array_lengths_gen   = new ArrayGenerator(10, 10000, 100000);
+const array_lengths       = array_lengths_gen.generateSequential();
 //console.log(array_lengths)
 
+let iteration       = 0;
+const min           = -1000;
+const max           = 1000;
 
-testJavaScriptMultipleThread(500000, -1000, 1000);  //array length, min val, max val
+iterateNextTestMultipleThread();
+
+
+
+
+//testJavaScriptMultipleThread(500000, -1000, 1000);  //array length, min val, max val
+
 //testJavaScriptSingleThread(200000, -1000, 1000);      //array length, min val, max val
 
 //test 4x multithreaded javascript sort
 
-/*
-var i = 0;
-var test_interval = setInterval(function(){
-  if(!array_lengths[i]){
-    clearInterval(test_interval);
-  } else {
-    //testJavaScriptMultipleThread(array_lengths[i]);
-    testJavaScriptSingleThread(array_lengths[i]);
-    i++;
-  }
-},60000);
-*/
-
-/*
-testJavaScriptMultipleThread(array_lengths[0])  //test without fcall now
-  .then(testJavaScriptMultipleThread(array_lengths[1]))
-  .then(testJavaScriptMultipleThread(array_lengths[2]))
-  .then(testJavaScriptMultipleThread(array_lengths[3]))
-  .then(testJavaScriptMultipleThread(array_lengths[4]))
-  .then(testJavaScriptMultipleThread(array_lengths[5]))
-  .then(testJavaScriptMultipleThread(array_lengths[6]))
-  .then(testJavaScriptMultipleThread(array_lengths[7]))
-  .then(testJavaScriptMultipleThread(array_lengths[8]));
-*/
 
 function testJavaScriptSingleThread(length, min, max){
   const cwd             = process.cwd();
@@ -55,7 +40,7 @@ function testJavaScriptSingleThread(length, min, max){
 
   fork_instance.on('message', function(data){
     if(data.result){
-        saveResult(data.result);
+        //saveResult(data.result);
         console.log("javascript sort length: " + length + " 1x thread elapsed ms: " + data.elapsed_ms);
         killForkProcesses([fork_instance]);   //expects an array of fork instances to kill
     }
@@ -101,11 +86,11 @@ function testJavaScriptMultipleThread(length, min, max){
             let sorted                = mergeSortedArrays(sorted1, sorted2);
             let time_finish           = new Date().getTime();
             elapsed_merge_sorted      = time_finish - time_start;
-            saveResult(sorted);
+            //saveResult(sorted);
             let total_time_ms = fork_result[0].elapsed_ms + elapsed_merge_sorted;
             console.log("javascript sort length: " + length + " 4x thread elapsed ms: " + total_time_ms);
             killForkProcesses(fork_instance);
-            iterateNextTestMultipleThread(700000, -1000, 1000);
+            iterateNextTestMultipleThread();
           }
       }
     });
@@ -131,8 +116,15 @@ function killForkProcesses(instances){
   });
 }
 
-function iterateNextTestMultipleThread(length, min, max){
-    testJavaScriptMultipleThread(length, min, max);  //array length, min val, max val
+function iterateNextTestMultipleThread(){
+  if(iteration < array_lengths.length){
+    let current_length = array_lengths[iteration];
+
+    testJavaScriptMultipleThread(current_length, min, max);  //array length, min val, max val
+    iteration++;
+  } else {
+    console.log("testing has completed");
+  }
 }
 
 
