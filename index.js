@@ -58,7 +58,7 @@ function testJavaScriptSingleThread(length, min, max){
   const array_gen     = new ArrayGenerator(length, min, max);
   const test_array    = array_gen.generateRandom();
 
-  fork_instance.send({load: true, path: '/src/node/MergeSort.js', args: test_array});
+  fork_instance.send({load: true, path: '/src/node/MergeSort.js', args: test_array, method: 'sort'});
   fork_instance.send({run: true});
 
   fork_instance.on('message', function(data){
@@ -93,7 +93,7 @@ function testJavaScriptMultipleThread(length, min, max){
 
   for (var i=0; i<array_data.length; i++){
     fork_instance.push(fork(cwd + '/src/node/ForkJavaScript.js',[],{silent: false}));
-      fork_instance[i].send({load: true, path: '/src/node/MergeSort.js', args: array_data[i]});
+      fork_instance[i].send({load: true, path: '/src/node/MergeSort.js', args: array_data[i], method: 'sort'});
       fork_instance[i].send({run: true});
 
     fork_instance[i].on('message', function(data){

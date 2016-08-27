@@ -1,40 +1,58 @@
+"use strict";
+
 /* Merge Sort Algorithm for Array of Numbers */
+class MergeSort {
 
-function mergeSort(arr) {
-    if (arr.length < 2)
-        return arr;
+    constructor (array) {
+        this.length    = array.length;
+        this.array     = array;
+        this.sorted    = new Array(this.length);  //pre-allocate the memory
+    }
 
-    var middle = parseInt(arr.length / 2);
-    var left   = arr.slice(0, middle);
-    var right  = arr.slice(middle, arr.length);
+    sort () {
+        this.sorted = this.mergeSort(this.array);
+        return this.sorted;
+    }
 
-    return merge(mergeSort(left), mergeSort(right));
-}
+    mergeSort(arr) {
+        if (arr.length < 2)
+            return arr;
 
-function merge(left, right) {
+        var middle = parseInt(arr.length / 2);
+        var left   = arr.slice(0, middle);
+        var right  = arr.slice(middle, arr.length);
 
-    //pre-allocate memory for the array length for performance
-    var result_length = left.length + right.length;
-    var result = new Array(result_length);
-    var index = 0;
+        return this.merge(this.mergeSort(left), this.mergeSort(right));
+    }
 
-    while (left.length && right.length) {
-        if (left[0] <= right[0]) {
-            result[index++] = left.shift();
-        } else {
-            result[index++] = right.shift();
+    merge (left, right) {
+        //pre-allocate memory for the array length for performance
+        let result_length = left.length + right.length;
+        let result = new Array(result_length);
+        let index = 0;
+
+        while (left.length && right.length) {
+            if (left[0] <= right[0]) {
+                result[index++] = left.shift();
+            } else {
+                result[index++] = right.shift();
+            }
         }
+
+        while (left.length){
+          result[index++] = left.shift();
+        }
+
+        while (right.length){
+          result[index++] = right.shift();
+        }
+
+        return result;
     }
 
-    while (left.length){
-      result[index++] = left.shift();
+    print () {
+        console.log( this.values.toString());
     }
-
-    while (right.length){
-      result[index++] = right.shift();
-    }
-
-    return result;
 }
 
-module.exports = mergeSort;
+module.exports = MergeSort;
