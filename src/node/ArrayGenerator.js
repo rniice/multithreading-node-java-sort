@@ -1,6 +1,7 @@
 "use strict";
 
-/* Generates Array of Length with Random Numbers Between Min and Max */
+/* Generates Array of Length between Min and Max
+  methods: generateRandom() and generateSequential()*/
 class ArrayGenerator {
 
     constructor (length, min, max) {
