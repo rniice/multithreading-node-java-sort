@@ -1,15 +1,45 @@
+"use strict";
+
 /* Generates Array of Length with Random Numbers Between Min and Max */
-function arrayGenerator(length, min, max) {
+class ArrayGenerator {
 
-  var random_array = new Array(length);
-  var index = 0;
+    constructor (length, min, max) {
+        this.length   = length;
+        this.min      = min;
+        this.max      = max;
+        this.values   = new Array(length);  //pre-allocate the memory
+    }
 
-  while (index < length) {
-    random_array[index++] = Math.random() * (max - min) + min;
-  }
+    generateRandom () {
+        let index = 0;
 
-  return random_array;
+        while (index < this.length) {
+            this.values[index++] = Math.random() * (this.max - this.min) + this.min;
+        }
+
+        return this.values;
+    }
+
+    generateSequential () {
+        let index = 1;
+        let increment = (this.max - this.min)/this.min;
+
+        while (index < this.length) {
+            if(index == 0){
+                this.values[index++] = this.min;
+            } else if(index == this.length-1) {
+                this.values[index++] = this.min;
+            } else {
+                this.values[index++] = this.values[index-1] + increment;
+            }
+        }
+
+        //return this.values;
+    }
+
+    print () {
+        console.log( this.values.toString());
+    }
 }
 
-
-module.exports = arrayGenerator;
+module.exports = ArrayGenerator;

@@ -3,27 +3,26 @@ var Q                       = require('q');                               //load
 
 var java                    = require("java");                            //load java bindings
 
-var randomArrayGenerator    = require('./src/node/ArrayGenerator');       //load the random array generator
+const ArrayGenerator        = require('./src/node/ArrayGenerator');       //load the random array generator
 var mergeSortArray          = require('./src/node/MergeSort');            //load the javascript merge sort libraries
 var mergeSortedArrays       = require('./src/node/MergeSortedArrays');    //load the javascript merge sorted array libraries
 
 //scripts for multithreading
-//var forkJavaScript          = require('./src/node/forkJavaScript');     //load method to run new forked nodeJS process
 var fork                    = require('child_process').fork;              //load child process fork dependencies
 var fs                      = require('fs');                              //load filesystem to save results
 
 java.classpath.push("bin/MergeSortBinaries.jar");                         //load the java merge sort libraries
 
-//set parameters for random array across all tests
-var min               = -1000;    //minimum value for random number sequence
-var max               =  1000;    //maximum value for random number sequence
+
+
+
 
 //createTestArrayLengths(min_array_length, max_array_length, array_increment);
-var array_lengths = createTestArrayLengths(10000, 1000000, 20000);
+//var array_lengths = createTestArrayLengths(10000, 1000000, 20000);
 //console.log(array_lengths);
 
-testJavaScriptMultipleThread(3000000);
-//testJavaScriptSingleThread(600000);
+testJavaScriptMultipleThread(100000, -1000, 1000);  //array length, min val, max val
+//testJavaScriptSingleThread(100000, -1000, 1000);      //array length, min val, max val
 
 //test 4x multithreaded javascript sort
 
@@ -52,11 +51,12 @@ testJavaScriptMultipleThread(array_lengths[0])  //test without fcall now
   .then(testJavaScriptMultipleThread(array_lengths[8]));
 */
 
-function testJavaScriptSingleThread(length){
-  var cwd           = process.cwd();
-  var fork_instance = fork(cwd + '/src/node/ForkJavaScript.js',[],{silent: false});
+function testJavaScriptSingleThread(length, min, max){
+  var cwd             = process.cwd();
+  var fork_instance   = fork(cwd + '/src/node/ForkJavaScript.js',[],{silent: false});
 
-  var test_array    = randomArrayGenerator(length,min,max);  //generate test array
+  const array_gen     = new ArrayGenerator(length, min, max);
+  const test_array    = array_gen.generateRandom();
 
   fork_instance.send({load: true, path: '/src/node/MergeSort.js', args: test_array});
   fork_instance.send({run: true});
@@ -69,10 +69,12 @@ function testJavaScriptSingleThread(length){
   });
 }
 
-function testJavaScriptMultipleThread(length){
+function testJavaScriptMultipleThread(length, min, max){
   //var defer         = Q.defer();
   var cwd           = process.cwd();
-  var test_array    = randomArrayGenerator(length,min,max);  //generate test array
+
+  const array_gen     = new ArrayGenerator(length, min, max);
+  const test_array    = array_gen.generateRandom();
 
   //using 4 threads;
   var length_ea = Math.floor(length/4);
