@@ -31,10 +31,10 @@ function forkJavaScript() {
   var time_finish     = new Date().getTime();
   var elapsed_ms      = time_finish - time_start;
   sendResult(result, elapsed_ms);
-  //process.exit();
+  requestKillProcess();
 }
 
-//respond to the parent with the reults
+//respond to the parent with the results
 function sendResult(result, elapsed_ms){
   //send the result over through the fork process message api.
   process.send(
@@ -43,4 +43,9 @@ function sendResult(result, elapsed_ms){
       elapsed_ms  : elapsed_ms
     }
   );
+}
+
+//respond to the parent with the results
+function requestKillProcess(){
+  process.send({end : true});
 }
