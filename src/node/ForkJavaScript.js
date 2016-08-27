@@ -1,6 +1,7 @@
 /* Run New nodeJS v8 Instance on separate CPU Core with specified method and args */
 var _function   = null;
 var _args       = null;
+//var _args       = new Array(1000000);  //pre-allocate memory for args
 
 process.send("new fork started");
 

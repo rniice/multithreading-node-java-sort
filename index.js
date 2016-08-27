@@ -19,11 +19,11 @@ var min               = -1000;    //minimum value for random number sequence
 var max               =  1000;    //maximum value for random number sequence
 
 //createTestArrayLengths(min_array_length, max_array_length, array_increment);
-var array_lengths = createTestArrayLengths(10000, 500000, 20000);
+var array_lengths = createTestArrayLengths(10000, 1000000, 20000);
 //console.log(array_lengths);
 
-testJavaScriptMultipleThread(570000);
-//testJavaScriptSingleThread(1000000);
+testJavaScriptMultipleThread(3000000);
+//testJavaScriptSingleThread(600000);
 
 //test 4x multithreaded javascript sort
 
@@ -53,15 +53,20 @@ testJavaScriptMultipleThread(array_lengths[0])  //test without fcall now
 */
 
 function testJavaScriptSingleThread(length){
+  var cwd           = process.cwd();
+  var fork_instance = fork(cwd + '/src/node/ForkJavaScript.js',[],{silent: false});
+
   var test_array    = randomArrayGenerator(length,min,max);  //generate test array
 
-  var time_start    = new Date().getTime();
-  var result        = mergeSortArray(test_array);
-  var time_finish   = new Date().getTime();
+  fork_instance.send({load: true, path: '/src/node/MergeSort.js', args: test_array});
+  fork_instance.send({run: true});
 
-  var elapsed_ms    = time_finish - time_start;
-  console.log("javascript sort length: " + length + " 1x thread elapsed ms: " + elapsed_ms);
-  return elapsed_ms;
+  fork_instance.on('message', function(data){
+    if(data.result){
+        saveResult(data.result);
+        console.log("javascript sort length: " + length + " 1x thread elapsed ms: " + data.elapsed_ms);
+    }
+  });
 }
 
 function testJavaScriptMultipleThread(length){
@@ -86,9 +91,8 @@ function testJavaScriptMultipleThread(length){
 
   for (var i=0; i<array_data.length; i++){
     fork_instance.push(fork(cwd + '/src/node/ForkJavaScript.js',[],{silent: false}));
-
-    fork_instance[i].send({load: true, path: '/src/node/MergeSort.js', args: array_data[i]});
-    fork_instance[i].send({run: true});
+      fork_instance[i].send({load: true, path: '/src/node/MergeSort.js', args: array_data[i]});
+      fork_instance[i].send({run: true});
 
     fork_instance[i].on('message', function(data){
       if(data.result){
@@ -97,8 +101,6 @@ function testJavaScriptMultipleThread(length){
           //if other all 4 fors are completed start the merging
           if(++forks_complete == 4){
             forks_finish_time = new Date().getTime();
-
-            //console.log("beginning merge");
 
             //do final sort on a single thread for now
             var time_start            = new Date().getTime();
@@ -109,18 +111,11 @@ function testJavaScriptMultipleThread(length){
             elapsed_merge_sorted      = time_finish - time_start;
             //console.log("merged sorted arrays elapsed_ms: " + elapsed_merge_sorted);
             saveResult(sorted);
-
             var total_time_ms = fork_result[0].elapsed_ms + elapsed_merge_sorted;
-            //console.log(elapsed_merge_sorted);
             console.log("javascript sort length: " + length + " 4x thread elapsed ms: " + total_time_ms);
-
-            //defer.resolve(total_time_ms);
-            //return defer.promise;
           }
       }
     });
-
-
   }
 }
 
