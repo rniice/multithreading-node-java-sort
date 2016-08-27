@@ -22,20 +22,22 @@ class ArrayGenerator {
     }
 
     generateSequential () {
-        let index = 1;
-        let increment = (this.max - this.min)/this.min;
+        let index = 0;
+        let increment = (this.max - this.min)/this.length;
+        console.log(increment);
 
         while (index < this.length) {
             if(index == 0){
                 this.values[index++] = this.min;
             } else if(index == this.length-1) {
-                this.values[index++] = this.min;
+                this.values[index++] = this.max;
             } else {
-                this.values[index++] = this.values[index-1] + increment;
+                let next_value = this.values[index-1] + increment;
+                this.values[index++] = next_value;
             }
         }
 
-        //return this.values;
+        return this.values;
     }
 
     print () {
