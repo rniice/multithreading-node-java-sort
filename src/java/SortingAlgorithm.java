@@ -22,11 +22,6 @@ package com.sortingmodules.sortingalgorithm;
  */
 public abstract class SortingAlgorithm {
 
-  public static void main(String[] args) {
-      // Prints "Hello, World" to the terminal window.
-      System.out.println("Hello, World");
-  }
-
   public abstract void sort(int[] numbers);
 
   protected void swap(int[] numbers, int i, int j) {
