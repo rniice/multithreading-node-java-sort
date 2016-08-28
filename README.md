@@ -14,4 +14,4 @@
 
 ## Results
 
-![Work In Progress](/img/memory_allocation_issue.jpg?raw=true "Work In Progress")
+![Work In Progress](/img/javascript_1x_4x_thread.jpg?raw=true "Work In Progress")
