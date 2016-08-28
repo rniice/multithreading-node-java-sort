@@ -1,5 +1,6 @@
-import java.util.Arrays;                        //import output formatting for arrays
-import com.sortingmodules.mergesort.MergeSort;  //import the mergesort library
+import java.util.Arrays;                              //import output formatting for arrays
+import com.sortingmodules.mergesort.MergeSort;        //import the mergesort library
+import com.sortingmodules.mergesort.MergeSortDouble;  //import the mergesortDouble library
 
 public class RunSorting {
 
@@ -21,6 +22,11 @@ public class RunSorting {
        double [] random_array = generateRandomArray(20, -100.0, 100.0);
        System.out.println(Arrays.toString(random_array)); // prints randomly generated array
 
+       MergeSortDouble mergesortinstancedouble = new MergeSortDouble();
+       mergesortinstancedouble.sort(random_array);
+       printArray(random_array);
+       //System.out.println(Arrays.toString(mergesortinstancedouble)); // prints sorted array
+
     }
 
     // generate array of length with random ints
@@ -34,13 +40,13 @@ public class RunSorting {
         return result;
     }
 
-    /*
-    private static void printArray(int[] anArray) {
+
+    private static void printArray(double[] anArray) {
        for (int i = 0; i < anArray.length; i++) {
           if (i > 0) {
              System.out.print(", ");
           }
           System.out.print(anArray[i]);
        }
-    } */
+    }
 }
