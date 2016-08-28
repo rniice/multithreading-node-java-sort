@@ -1,31 +1,40 @@
-import java.util.Arrays;                              //import output formatting for arrays
-import com.sortingmodules.mergesort.MergeSort;        //import the mergesort library
-import com.sortingmodules.mergesort.MergeSortDouble;  //import the mergesortDouble library
+/*
+ * Original: Copyright (C) 2016 Michael Crockett.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+import java.util.Arrays;                                  //import output formatting for arrays
+import com.sortingmodules.mergesort.MergeSortDouble;      //import the mergesortDouble library
+
 
 public class RunSorting {
 
-   /* This is my first java program.
-    * This will print 'Hello World' as the output
+   /*
+    * This is the entry point to the program
     */
     public static void main(String [] args) {
-       System.out.println("Beginning Sorting"); // prints Hello World
+       //extract the length, min, and max of the desired sort from args passed
 
-       int [] test_array = new int[]{3,1,6,15,2};
-       System.out.println(Arrays.toString(test_array));  // prints unsorted array
+       System.out.println("Beginning Sorting Doubles Array");
 
-       MergeSort mergesortinstance = new MergeSort();
-       mergesortinstance.sort(test_array);
 
-       System.out.println(Arrays.toString(test_array)); // prints sorted array
+       double [] random_array = generateRandomArray(200, -100.0, 100.0);    //create a random array of doubles
+       //System.out.println(Arrays.toString(random_array)); // prints randomly generated array
 
-       //test generating random array
-       double [] random_array = generateRandomArray(20, -100.0, 100.0);
-       System.out.println(Arrays.toString(random_array)); // prints randomly generated array
-
-       MergeSortDouble mergesortinstancedouble = new MergeSortDouble();
-       mergesortinstancedouble.sort(random_array);
-       printArray(random_array);
-       //System.out.println(Arrays.toString(mergesortinstancedouble)); // prints sorted array
+       MergeSortDouble mergesort_instance = new MergeSortDouble();          //create a mergesort_instance
+       mergesort_instance.sort(random_array);                               //use sort() method on random_array
+       printArray(random_array);                                            //print out the resulting sorted array
 
     }
 
@@ -40,7 +49,7 @@ public class RunSorting {
         return result;
     }
 
-
+    //output formatting to print the result of an array of doubles
     private static void printArray(double[] anArray) {
        for (int i = 0; i < anArray.length; i++) {
           if (i > 0) {

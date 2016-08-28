@@ -5,10 +5,10 @@
 class ArrayGenerator {
 
     constructor (length, min, max) {
-        this.length   = length;
+        this.length   = parseInt(length);       //make sure length is integer
         this.min      = min;
         this.max      = max;
-        this.values   = new Array(length);  //pre-allocate the memory
+        this.values   = new Array(this.length);  //pre-allocate the memory
     }
 
     generateRandom () {
@@ -24,7 +24,6 @@ class ArrayGenerator {
     generateSequential () {
         let index = 0;
         let increment = (this.max - this.min)/this.length;
-        console.log(increment);
 
         while (index < this.length) {
             if(index == 0){
