@@ -6,7 +6,7 @@ public class RunSorting {
    /* This is my first java program.
     * This will print 'Hello World' as the output
     */
-    public static void main(String []args) {
+    public static void main(String [] args) {
        System.out.println("Beginning Sorting"); // prints Hello World
 
        int[] test_array = new int[]{3,1,6,15,2};
@@ -17,6 +17,21 @@ public class RunSorting {
 
        System.out.println(Arrays.toString(test_array)); // prints sorted array
 
+       //test generating random array
+       int[] random_array = generateRandomArray(20);
+       System.out.println(Arrays.toString(random_array)); // prints randomly generated array
+
+    }
+
+    // generate array of length with random ints
+    private static int[] generateRandomArray(int length) {
+        int[] result = new int[length];
+
+        for(int i = 0; i < result.length; i++) {
+            result[i] = (int)(Math.random() * 100);  //cast random 0-100 as int
+        }
+
+        return result;
     }
 
     /*
