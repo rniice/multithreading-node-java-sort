@@ -14,8 +14,9 @@
  * limitations under the License.
  */
 
-import java.util.Arrays;                                  //import output formatting for arrays
-import com.sortingmodules.mergesort.MergeSortDouble;      //import the mergesortDouble library
+import java.util.Arrays;                                  //import Java Arrays Class
+import java.util.Date;                                    //import Java Date Class
+import com.sortingmodules.mergesort.MergeSortDouble;      //import MrgesortDouble Class
 
 
 public class RunSorting {
@@ -29,16 +30,17 @@ public class RunSorting {
        double min   = Double.parseDouble(args[1]);
        double max   = Double.parseDouble(args[2]);
 
-       System.out.println("Beginning Sorting Doubles Array. Length = "
-          + length + ", min= " + min + ", max = " + max);
-
        double [] random_array = generateRandomArray(length, min, max);    //create a random array of doubles
-       //System.out.println(Arrays.toString(random_array)); // prints randomly generated array
 
-       MergeSortDouble mergesort_instance = new MergeSortDouble();          //create a mergesort_instance
-       mergesort_instance.sort(random_array);                               //use sort() method on random_array
-       printArray(random_array);                                            //print out the resulting sorted array
+       MergeSortDouble mergesort_instance = new MergeSortDouble();        //create a mergesort_instance
 
+       long start_time  = new Date().getTime();
+       mergesort_instance.sort(random_array);                             //use sort() method on random_array
+       long finish_time = new Date().getTime();
+       long elapsed_ms  = finish_time - start_time;
+
+       System.out.println("Sorting Doubles []; length= " + length + ", min= " + min + ", max= " + max + ", elapsed_ms= " + elapsed_ms);
+       //printArray(random_array);                                            //print out the resulting sorted array
     }
 
     // generate array of length with random ints
