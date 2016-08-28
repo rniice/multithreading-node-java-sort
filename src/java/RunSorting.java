@@ -25,11 +25,14 @@ public class RunSorting {
     */
     public static void main(String [] args) {
        //extract the length, min, and max of the desired sort from args passed
+       int length   = Integer.parseInt(args[0]);
+       double min   = Double.parseDouble(args[1]);
+       double max   = Double.parseDouble(args[2]);
 
-       System.out.println("Beginning Sorting Doubles Array");
+       System.out.println("Beginning Sorting Doubles Array. Length = "
+          + length + ", min= " + min + ", max = " + max);
 
-
-       double [] random_array = generateRandomArray(200, -100.0, 100.0);    //create a random array of doubles
+       double [] random_array = generateRandomArray(length, min, max);    //create a random array of doubles
        //System.out.println(Arrays.toString(random_array)); // prints randomly generated array
 
        MergeSortDouble mergesort_instance = new MergeSortDouble();          //create a mergesort_instance
