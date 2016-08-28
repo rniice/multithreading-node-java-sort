@@ -9,7 +9,7 @@ public class RunSorting {
     public static void main(String [] args) {
        System.out.println("Beginning Sorting"); // prints Hello World
 
-       int[] test_array = new int[]{3,1,6,15,2};
+       int [] test_array = new int[]{3,1,6,15,2};
        System.out.println(Arrays.toString(test_array));  // prints unsorted array
 
        MergeSort mergesortinstance = new MergeSort();
@@ -18,17 +18,17 @@ public class RunSorting {
        System.out.println(Arrays.toString(test_array)); // prints sorted array
 
        //test generating random array
-       int[] random_array = generateRandomArray(20);
+       double [] random_array = generateRandomArray(20, -100.0, 100.0);
        System.out.println(Arrays.toString(random_array)); // prints randomly generated array
 
     }
 
     // generate array of length with random ints
-    private static int[] generateRandomArray(int length) {
-        int[] result = new int[length];
+    private static double [] generateRandomArray(int length, double min, double max) {
+        double [] result = new double [length];
 
-        for(int i = 0; i < result.length; i++) {
-            result[i] = (int)(Math.random() * 100);  //cast random 0-100 as int
+        for(int i = 0; i < length; i++) {
+            result[i] = Math.random() * (max - min) + min;
         }
 
         return result;
