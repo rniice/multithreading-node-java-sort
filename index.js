@@ -1,22 +1,20 @@
-//const Q                     = require('q');                               //load Q for promise management
-const java                  = require("java");                            //load java bindings
 const ArrayGenerator        = require('./src/node/ArrayGenerator');       //load the random array generator
 const mergeSortedArrays     = require('./src/node/MergeSortedArrays');    //load the javascript merge sorted array libraries
 const fork                  = require('child_process').fork;              //load child process fork dependencies
 const fs                    = require('fs');                              //load filesystem to save results
 
-java.classpath.push("bin/MergeSortBinaries.jar");                         //load the java merge sort libraries
-
-//const array_lengths_gen   = new ArrayGenerator(100, 10000, 1000000);
-const array_lengths_gen   = new ArrayGenerator(3, 1000000, 10000000);
+const array_lengths_gen   = new ArrayGenerator(10, 4000000, 1000000);
 const array_lengths       = array_lengths_gen.generateSequential();
 
 let iteration       = 0;
 const min           = -1000;
 const max           = 1000;
 
-//kick off testing by starting multiple threads sorting
-iterateNextTestMultipleThread();
+//start running 4x thread javascript mergesort, then 1x thread
+iterateNextTestMultipleThread(false);
+
+//run java sort; uncomment to run iterations in array_lengths
+//iterateNextTestSingleThread(true);
 
 
 function testJavaScriptSingleThread(length, min, max){
@@ -33,7 +31,7 @@ function testJavaScriptSingleThread(length, min, max){
         //saveResult(data.result);
         console.log("javascript sort length: " + length + " 1x thread elapsed ms: " + data.elapsed_ms);
         killForkProcesses([fork_instance]);   //expects an array of fork instances to kill
-        iterateNextTestSingleThread();
+        iterateNextTestSingleThread(false);
     }
   });
 }
@@ -88,17 +86,35 @@ function testJavaScriptMultipleThread(length, min, max){
 }
 
 
-function testJavaSingleThread(length){
-  var test_array = randomArrayGenerator(length,min,max);  //generate test array
+function testJavaSingleThread(length, min, max){
+  //uses java methods to create random array and
+  var cwd         = process.cwd();
+  var executable  = "RunSorting.jar";
+  var path_bin    = cwd + "/bin/" + executable;
+  var method      = " com.sortingmodules.runsorting.RunSorting"
+  var args        = " " + length.toString() + " " + min.toString() + " " + max.toString();
+
+  var exec = require('child_process').exec;
+  var child = exec('java -cp ' + path_bin + method + args,
+    function (error, stdout, stderr){
+      if(error){
+        console.log("Error -> "+error);
+      } else {
+        console.log(stdout);
+        iterateNextTestSingleThread(true);  //kick off the next run
+      }
+  });
 
 
 }
 
+/*
 function testJavaMultipleThread(length){
   var test_array = randomArrayGenerator(length,min,max);  //generate test array
 
 
 }
+*/
 
 function killForkProcesses(instances){
   instances.map(function(item){
@@ -116,16 +132,21 @@ function iterateNextTestMultipleThread(){
     console.log("multiple thread testing has completed");
     //start off testing single thread iteration
     iteration = 0;
-    iterateNextTestSingleThread();
+    iterateNextTestSingleThread(false);
   }
 }
 
-function iterateNextTestSingleThread(){
+function iterateNextTestSingleThread(run_java){ //if run_java is true, next is testJava, else test JavaScript
   if(iteration < array_lengths.length){
     let current_length = array_lengths[iteration];
 
-    testJavaScriptSingleThread(current_length, min, max);  //array length, min val, max val
-    iteration++;
+    if(run_java){
+        testJavaSingleThread(current_length, min, max);  //array length, min val, max val
+        iteration++;
+    } else {
+        testJavaScriptSingleThread(current_length, min, max);  //array length, min val, max val
+        iteration++;
+    }
   } else {
     console.log("single thread testing has completed");
   }
@@ -150,6 +171,3 @@ function saveResult(data){
   });
 
 }
-
-//test single thread java for various lengths n array
-//test multiple thread java for various lengths n array

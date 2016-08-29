@@ -2,5 +2,5 @@ rm -r build
 mkdir build
 javac -d ./build *.java
 cd build
-jar cvf MergeSortBinaries.jar *
-cp MergeSortBinaries.jar ../../../bin/MergeSortBinaries.jar
+jar cvf RunSorting.jar *
+cp RunSorting.jar ../../../bin/RunSorting.jar

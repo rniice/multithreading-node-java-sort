@@ -14,10 +14,11 @@
  * limitations under the License.
  */
 
+package com.sortingmodules.runsorting;
+
 import java.util.Arrays;                                  //import Java Arrays Class
 import java.util.Date;                                    //import Java Date Class
 import com.sortingmodules.mergesort.MergeSortDouble;      //import MrgesortDouble Class
-
 
 public class RunSorting {
 
@@ -39,7 +40,8 @@ public class RunSorting {
        long finish_time = new Date().getTime();
        long elapsed_ms  = finish_time - start_time;
 
-       System.out.println("Sorting Doubles []; length= " + length + ", min= " + min + ", max= " + max + ", elapsed_ms= " + elapsed_ms);
+       System.out.println("Sorting Doubles []; length= " + length +
+          ", min= " + min + ", max= " + max + ", elapsed_ms= " + elapsed_ms);
        //printArray(random_array);                                            //print out the resulting sorted array
     }
 
