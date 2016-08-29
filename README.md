@@ -4,8 +4,8 @@
 
 - [x] test single thread javascript for various lengths n array
 - [x] test multiple thread javascript for various lengths n array
-- [ ] test single thread java for various lengths n array
-- [ ] test multiple thread java for various lengths n array
+- [x] test single thread java for various lengths n array
+- [x] ~~test multiple thread java for various lengths n array~~
 
 ## Dependencies
 
@@ -15,3 +15,5 @@
 ## Results
 
 ![Work In Progress](/img/javascript_1x_4x_thread.jpg?raw=true "Work In Progress")
+
+- skipped testing java multiple threads, it was more than fast enough
