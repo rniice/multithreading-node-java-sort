@@ -2,10 +2,10 @@
 
 ## Compare Merge Sorting Javascript vs Java Single vs Multiple Threads
 
-- [x] test single thread javascript for various lengths n array
-- [x] test multiple thread javascript for various lengths n array
-- [x] test single thread java for various lengths n array
-- [x] ~~test multiple thread java for various lengths n array~~
+- [x] test single thread javascript for various lengths n array of random #s between -1000 and 1000
+- [x] test multiple thread javascript for various lengths n array of random #s between -1000 and 1000
+- [x] test single thread java for various lengths n array of random #s between -1000 and 1000
+- [x] ~~test multiple thread java for various lengths n array of random #s between -1000 and 1000~~
 
 ## Dependencies
 
